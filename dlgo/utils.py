@@ -1,12 +1,12 @@
-from dlgo import gotypes
 import numpy as np
-
+# tag::print_utils[]
+from dlgo import gotypes
 
 COLS = 'ABCDEFGHJKLMNOPQRST'
 STONE_TO_CHAR = {
-    None: '.',
-    gotypes.Player.black: 'x',
-    gotypes.Player.white: 'o',
+    None: ' . ',
+    gotypes.Player.black: ' x ',
+    gotypes.Player.white: ' o ',
 }
 
 
@@ -28,13 +28,17 @@ def print_board(board):
             stone = board.get(gotypes.Point(row=row, col=col))
             line.append(STONE_TO_CHAR[stone])
         print('%s%d %s' % (bump, row, ''.join(line)))
-    print('   ' + ''.join(COLS[:board.num_cols]))
+    print('    ' + '  '.join(COLS[:board.num_cols]))
+# end::print_utils[]
 
 
+# tag::human_coordinates[]
 def point_from_coords(coords):
     col = COLS.index(coords[0]) + 1
     row = int(coords[1:])
     return gotypes.Point(row=row, col=col)
+# end::human_coordinates[]
+
 
 def coords_from_point(point):
     return '%s%d' % (
@@ -43,7 +47,10 @@ def coords_from_point(point):
     )
 
 
-class MoveAge:
+# NOTE: MoveAge is only used in chapter 13, and doesn't make it to the main text.
+# This feature will only be implemented in goboard_fast.py so as not to confuse
+# readers in early chapters.
+class MoveAge():
     def __init__(self, board):
         self.move_ages = - np.ones((board.num_rows, board.num_cols))
 

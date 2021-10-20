@@ -51,7 +51,7 @@ class IllegalMoveError(Exception):
     pass
 
 
-class GoString:
+class GoString():
     """Stones that are linked by a chain of connected stones of the
     same color.
     """
@@ -91,7 +91,7 @@ class GoString:
         return GoString(self.color, self.stones, copy.deepcopy(self.liberties))
 
 
-class Board:
+class Board():
     def __init__(self, num_rows, num_cols):
         self.num_rows = num_rows
         self.num_cols = num_cols
@@ -107,6 +107,7 @@ class Board:
         self.neighbor_table = neighbor_tables[dim]
         self.corner_table = corner_tables[dim]
         self.move_ages = MoveAge(self)
+
 
     def neighbors(self, point):
         return self.neighbor_table[point]
@@ -136,16 +137,22 @@ class Board:
                 if neighbor_string not in adjacent_opposite_color:
                     adjacent_opposite_color.append(neighbor_string)
         new_string = GoString(player, [point], liberties)
-
+# tag::apply_zobrist[]
+        # 1. Merge any adjacent strings of the same color.
         for same_color_string in adjacent_same_color:
             new_string = new_string.merged_with(same_color_string)
         for new_string_point in new_string.stones:
             self._grid[new_string_point] = new_string
-
+        # Remove empty-point hash code.
         self._hash ^= zobrist.HASH_CODE[point, None]
-
+        # Add filled point hash code.
         self._hash ^= zobrist.HASH_CODE[point, player]
+# end::apply_zobrist[]
 
+        # 2. Reduce liberties of any adjacent strings of the opposite
+        #    color.
+        # 3. If any opposite color strings now have zero liberties,
+        #    remove them.
         for other_color_string in adjacent_opposite_color:
             replacement = other_color_string.without_liberty(point)
             if replacement.num_liberties:
@@ -160,7 +167,7 @@ class Board:
     def _remove_string(self, string):
         for point in string.stones:
             self.move_ages.reset_age(point)
-
+            # Removing a string can create liberties for other strings.
             for neighbor in self.neighbor_table[point]:
                 neighbor_string = self._grid.get(neighbor)
                 if neighbor_string is None:
@@ -168,9 +175,9 @@ class Board:
                 if neighbor_string is not string:
                     self._replace_string(neighbor_string.with_liberty(point))
             self._grid[point] = None
-
+            # Remove filled point hash code.
             self._hash ^= zobrist.HASH_CODE[point, string.color]
-
+            # Add empty point hash code.
             self._hash ^= zobrist.HASH_CODE[point, None]
 
     def is_self_capture(self, player, point):
@@ -210,6 +217,7 @@ class Board:
 
     def get(self, point):
         """Return the content of a point on the board.
+
         Returns None if the point is empty, or a Player if there is a
         stone on that point.
         """
@@ -220,6 +228,7 @@ class Board:
 
     def get_go_string(self, point):
         """Return the entire string of stones at a point.
+
         Returns None if the point is empty, or a GoString if there is
         a stone on that point.
         """
@@ -250,6 +259,7 @@ class Board:
 
 class Move():
     """Any action a player can play on a turn.
+
     Exactly one of is_play, is_pass, is_resign will be set.
     """
     def __init__(self, point=None, is_pass=False, is_resign=False):

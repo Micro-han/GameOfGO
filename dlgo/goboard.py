@@ -140,6 +140,7 @@ class Board:
 
     def get(self, point):
         """Return the content of a point on the board.
+
         Returns None if the point is empty, or a Player if there is a
         stone on that point.
         """
@@ -150,6 +151,7 @@ class Board:
 
     def get_go_string(self, point):
         """Return the entire string of stones at a point.
+
         Returns None if the point is empty, or a GoString if there is
         a stone on that point.
         """
