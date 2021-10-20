@@ -36,26 +36,12 @@ def load_model_from_hdf5_group(f, custom_objects=None):
         for k in root_item.keys():
             f.copy(root_item.get(k), serialized_model, k)
         serialized_model.close()
-        return load_model(tempfname, custom_objects=custom_objects)
+        return load_model(tempfname, custom_objects=custom_objects, compile=False)
     finally:
         os.unlink(tempfname)
 
 
 def set_gpu_memory_target(frac):
-    """Configure Tensorflow to use a fraction of available GPU memory.
-
-    Use this for evaluating models in parallel. By default, Tensorflow
-    will try to map all available GPU memory in advance. You can
-    configure to use just a fraction so that multiple processes can run
-    in parallel. For example, if you want to use 2 works, set the
-    memory fraction to 0.5.
-
-    If you are using Python multiprocessing, you must call this function
-    from the *worker* process (not from the parent).
-
-    This function does nothing if Keras is using a backend other than
-    Tensorflow.
-    """
     if keras.backend.backend() != 'tensorflow':
         return
     # Do the import here, not at the top, in case Tensorflow is not
