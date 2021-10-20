@@ -1,5 +1,9 @@
 from dlgo.gotypes import Point
 
+__all__ = [
+    'is_point_an_eye'
+]
+
 
 def is_point_an_eye(board, point, color):
     # 判断是否为眼

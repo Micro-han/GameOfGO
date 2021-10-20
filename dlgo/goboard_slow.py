@@ -182,6 +182,7 @@ class GameState:
     @property
     def situation(self):
         return (self.next_player, self.board)
+
     def does_move_violate_ko(self, player, move):
         if not move.is_play:
             return False
