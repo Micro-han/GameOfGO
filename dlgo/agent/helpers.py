@@ -1,13 +1,11 @@
-# tag::helpersimport[]
 from dlgo.gotypes import Point
-# end::helpersimport[]
+
 
 __all__ = [
     'is_point_an_eye',
 ]
 
 
-# tag::eye[]
 def is_point_an_eye(board, point, color):
     if board.get(point) is not None:  # <1>
         return False

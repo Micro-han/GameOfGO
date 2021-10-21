@@ -1,4 +1,3 @@
-# tag::dl_agent_imports[]
 import numpy as np
 
 from dlgo.agent.base import Agent
@@ -6,14 +5,13 @@ from dlgo.agent.helpers import is_point_an_eye
 from dlgo import encoders
 from dlgo import goboard
 from dlgo import kerasutil
-# end::dl_agent_imports[]
+
 __all__ = [
     'DeepLearningAgent',
     'load_prediction_agent',
 ]
 
 
-# tag::dl_agent_init[]
 class DeepLearningAgent(Agent):
     def __init__(self, model, encoder):
         Agent.__init__(self)
@@ -30,19 +28,19 @@ class DeepLearningAgent(Agent):
         with graph.as_default():
             move_probs = self.predict(game_state)
 
-        move_probs = move_probs ** 3  # <1>
+        move_probs = move_probs ** 3
         eps = 1e-6
-        move_probs = np.clip(move_probs, eps, 1 - eps)  # <2>
-        move_probs = move_probs / np.sum(move_probs)  # <3>
-        candidates = np.arange(num_moves)  # <1>
+        move_probs = np.clip(move_probs, eps, 1 - eps)
+        move_probs = move_probs / np.sum(move_probs)
+        candidates = np.arange(num_moves)
         ranked_moves = np.random.choice(
-            candidates, num_moves, replace=False, p=move_probs)  # <2>
+            candidates, num_moves, replace=False, p=move_probs)
         for point_idx in ranked_moves:
             point = self.encoder.decode_point_index(point_idx)
             if game_state.is_valid_move(goboard.Move.play(point)) and \
-                    not is_point_an_eye(game_state.board, point, game_state.next_player):  # <3>
+                    not is_point_an_eye(game_state.board, point, game_state.next_player):
                 return goboard.Move.play(point)
-        return goboard.Move.pass_turn()  # <4>
+        return goboard.Move.pass_turn()
 
     def serialize(self, h5file):
         h5file.create_group('encoder')

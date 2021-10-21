@@ -1,5 +1,4 @@
 import h5py
-import os
 from dlgo.agent.naive import RandomBot
 from dlgo.agent.predict import load_prediction_agent
 from dlgo.httpfrontend import get_web_app

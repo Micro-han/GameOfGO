@@ -3,6 +3,7 @@ import random
 from dlgo.gotypes import Player, Point
 
 
+# 随机生成zobrist哈希值 加速棋局
 def to_python(player_state):
     if player_state is None:
         return 'None'

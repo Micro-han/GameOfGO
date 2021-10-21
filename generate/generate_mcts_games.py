@@ -8,31 +8,31 @@ from dlgo.utils import print_board, print_move
 
 
 def generate_game(board_size, rounds, max_moves, temperature):
-    boards, moves = [], []  # <1>
+    boards, moves = [], []
 
-    encoder = get_encoder_by_name('oneplane', board_size)  # <2>
+    encoder = get_encoder_by_name('oneplane', board_size)
 
-    game = goboard.GameState.new_game(board_size)  # <3>
+    game = goboard.GameState.new_game(board_size)
 
-    bot = mcts.MCTSAgent(rounds, temperature)  # <4>
+    bot = mcts.MCTSAgent(rounds, temperature)
 
     num_moves = 0
     while not game.is_over():
         print_board(game.board)
-        move = bot.select_move(game)  # <5>
+        move = bot.select_move(game)
         if move.is_play:
-            boards.append(encoder.encode(game))  # <6>
+            boards.append(encoder.encode(game))
             move_one_hot = np.zeros(encoder.num_points())
             move_one_hot[encoder.encode_point(move.point)] = 1
-            moves.append(move_one_hot)  # <7>
+            moves.append(move_one_hot)
 
         print_move(game.next_player, move)
-        game = game.apply_move(move)  # <8>
+        game = game.apply_move(move)
         num_moves += 1
-        if num_moves > max_moves:  # <9>
+        if num_moves > max_moves:
             break
 
-    return np.array(boards), np.array(moves)  # <10>
+    return np.array(boards), np.array(moves)
 
 
 def main():
@@ -46,7 +46,7 @@ def main():
     parser.add_argument('--board-out')
     parser.add_argument('--move-out')
 
-    args = parser.parse_args()  # <1>
+    args = parser.parse_args()
     xs = []
     ys = []
 
@@ -56,12 +56,13 @@ def main():
         xs.append(x)
         ys.append(y)
 
-    x = np.concatenate(xs)  # <3>
+    x = np.concatenate(xs)
     y = np.concatenate(ys)
 
-    np.save(args.board_out, x)  # <4>
+    np.save(args.board_out, x)  
     np.save(args.move_out, y)
 
 
 if __name__ == '__main__':
+    # 通过蒙特卡洛剪枝 随机生成棋局
     main()
