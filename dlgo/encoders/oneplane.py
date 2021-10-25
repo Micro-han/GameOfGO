@@ -3,6 +3,7 @@ from dlgo.encoders.base import Encoder
 from dlgo.goboard import Point
 
 
+# 一平面编码器 黑白无
 class OnePlaneEncoder(Encoder):
     def __init__(self, board_size):
         self.board_width, self.board_height = board_size
@@ -40,7 +41,6 @@ class OnePlaneEncoder(Encoder):
     # 交叉点总数
     def num_points(self):
         return self.board_width * self.board_height
-
 
     # 棋盘结构编码后的形状
     def shape(self):
