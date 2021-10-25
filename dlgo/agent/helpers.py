@@ -6,16 +6,17 @@ __all__ = [
 ]
 
 
+# 判断一个点是否为眼
 def is_point_an_eye(board, point, color):
-    if board.get(point) is not None:  # <1>
+    if board.get(point) is not None:
         return False
-    for neighbor in point.neighbors():  # <2>
+    for neighbor in point.neighbors():
         if board.is_on_grid(neighbor):
             neighbor_color = board.get(neighbor)
             if neighbor_color != color:
                 return False
 
-    friendly_corners = 0  # <3>
+    friendly_corners = 0
     off_board_corners = 0
     corners = [
         Point(point.row - 1, point.col - 1),
@@ -31,12 +32,5 @@ def is_point_an_eye(board, point, color):
         else:
             off_board_corners += 1
     if off_board_corners > 0:
-        return off_board_corners + friendly_corners == 4  # <4>
-    return friendly_corners >= 3  # <5>
-
-# <1> An eye is an empty point.
-# <2> All adjacent points must contain friendly stones.
-# <3> We must control 3 out of 4 corners if the point is in the middle of the board; on the edge we must control all corners.
-# <4> Point is on the edge or corner.
-# <5> Point is in the middle.
-# end::eye[]
+        return off_board_corners + friendly_corners == 4
+    return friendly_corners >= 3

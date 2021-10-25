@@ -1,10 +1,11 @@
-from dlgo import goboard_slow as goboard
+from dlgo import goboard as goboard
 from dlgo import gotypes
 from dlgo.utils import print_board, print_move, point_from_coords
 from dlgo.agent.naive import RandomBot
 from six.moves import input
 
 
+# 人打随机机器人
 def main():
     board_size = 9
     game = goboard.GameState.new_game(board_size)

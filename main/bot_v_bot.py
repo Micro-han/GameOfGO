@@ -5,6 +5,7 @@ from dlgo.agent.naive import RandomBot
 import time
 
 
+# 随机机器人对打
 def main():
     board_size = 9
     game = goboard.GameState.new_game(board_size)

@@ -13,6 +13,7 @@ else:
     from urllib import urlopen, urlretrieve
 
 
+# 爬虫 获得u-go网站上的围棋sgf围棋资源
 def worker(url_and_target):  # Parallelize data download via multiprocessing
     try:
         (url, target_path) = url_and_target

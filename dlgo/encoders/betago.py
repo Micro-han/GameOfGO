@@ -4,6 +4,7 @@ from dlgo.encoders.base import Encoder
 from dlgo.goboard import Move, Point
 
 
+# 网上下的ai
 class BetaGoEncoder(Encoder):
     """7 plane encoder as used in betago"""
     def __init__(self, board_size):
