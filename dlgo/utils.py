@@ -1,5 +1,3 @@
-import numpy as np
-# tag::print_utils[]
 from dlgo import gotypes
 
 COLS = 'ABCDEFGHJKLMNOPQRST'
@@ -29,17 +27,16 @@ def print_board(board):
             line.append(STONE_TO_CHAR[stone])
         print('%s%d %s' % (bump, row, ''.join(line)))
     print('    ' + '  '.join(COLS[:board.num_cols]))
-# end::print_utils[]
 
 
-# tag::human_coordinates[]
+# 点到坐标
 def point_from_coords(coords):
     col = COLS.index(coords[0]) + 1
     row = int(coords[1:])
     return gotypes.Point(row=row, col=col)
-# end::human_coordinates[]
 
 
+# 坐标到点
 def coords_from_point(point):
     return '%s%d' % (
         COLS[point.col - 1],

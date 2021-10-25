@@ -3,6 +3,7 @@ from keras.layers.core import Dense, Activation, Flatten
 from keras.layers.convolutional import Conv2D, ZeroPadding2D
 
 
+# 围棋深度学习网络
 def layers(input_shape):
     return [
         ZeroPadding2D((3, 3), input_shape=input_shape, data_format='channels_first'),

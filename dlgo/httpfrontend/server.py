@@ -15,6 +15,7 @@ __all__ = [
 ]
 
 
+# 基于flask的本地围棋游戏 黑盒
 def get_web_app(bot_map, graph):
     """Create a flask application for serving bot moves.
 

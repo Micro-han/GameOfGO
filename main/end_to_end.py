@@ -28,16 +28,17 @@ def main(graph):
         model.add(layer)
     model.add(Dense(nb_classes, activation='softmax'))
     model.compile(loss='categorical_crossentropy', optimizer='adadelta', metrics=['accuracy'])
-
     model.fit(X, y, batch_size=128, epochs=20, verbose=1)
+
+    # 将训练的模型保存并序列化
     deep_learning_bot = DeepLearningAgent(model, encoder)
     model_file = h5py.File("../agents/deep_bot.h5", "w")
     deep_learning_bot.serialize(model_file)
 
     random_agent = RandomBot()
+    # 加载序列化的模型
     model_file = h5py.File("../agents/deep_bot.h5", "r")
-
-
+    # 防止加载异常
     try:
         bot_from_file = load_prediction_agent(model_file)
         web_app = get_web_app({'predict': bot_from_file}, graph)
