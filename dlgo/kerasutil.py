@@ -5,6 +5,7 @@ import h5py
 import keras
 from keras.models import load_model, save_model
 import tensorflow as tf
+from keras.backend.tensorflow_backend import set_session
 
 
 # 将模型存储为hdf5的形式
@@ -38,11 +39,10 @@ def load_model_from_hdf5_group(f, custom_objects=None):
         os.unlink(tempfname)
 
 
-# 设置gpu内存学习
 def set_gpu_memory_target(frac):
     if keras.backend.backend() != 'tensorflow':
         return
-    from keras.backend.tensorflow_backend import set_session
+    # 打印出来是gpu环境还是cpu环境训练
     config = tf.ConfigProto()
     config.gpu_options.per_process_gpu_memory_fraction = frac
     set_session(tf.Session(config=config))
