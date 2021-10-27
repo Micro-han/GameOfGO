@@ -23,7 +23,7 @@ human_v_human.py是基于tkinter的客户端人人对战
 
 **通过Start.py启动**
 
-安装好所需要的配置之后，直接运行根目录下的start.py即可启动游戏
+安装好所需要的配置之后，直接运行根目录下的start.py即可启动游戏，start.py实现的很敷衍
 
 其内置了人机对战和人人对战，其中人机对战是AI betago，而人人对战即基于tkinter的客户端人人对战
 
@@ -51,18 +51,19 @@ human_v_human.py是基于tkinter的客户端人人对战
 
 ```python
 agents
-	betago.hdf5
+	betago.hdf5 # 训练好的机器人
 dlgo
 	data
-    	index_processor.py
-        sampling.py
+    	index_processor.py # u-go网站爬虫代码
+        sampling.py # 特征采样器代码
     encoders
-    	betago.py
-    gosgf全部
+    	betago.py # betago的特征提取器
+    gosgf全部 # 爬虫爬取的sgf文件转换器
     httpfrontend
-    	server.py
-        static中的前端代码
+    	server.py # flask前端启动器
+        static中的前端代码 # flask围棋前端
 ```
 
+### 其他
 
-
+有问题请联系我mail： yxhop666@gmail.com
