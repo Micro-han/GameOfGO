@@ -5,7 +5,7 @@ from dlgo.httpfrontend import get_web_app
 import tensorflow as tf
 
 
-def main(graph):
+def runitapp(graph):
     random_agent = RandomBot()
     model_file = h5py.File("../agents/betago.hdf5", "r")
 
@@ -22,4 +22,4 @@ def main(graph):
 global graph
 if __name__ == '__main__':
     graph = tf.get_default_graph()
-    main(graph)
+    runitapp(graph)

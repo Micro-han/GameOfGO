@@ -20,7 +20,7 @@ def main(graph):
     processor = GoDataProcessor(encoder=encoder.name())
 
     # 加载num_samples个棋谱的特征和标签
-    X, y = processor.load_go_data(num_samples=1)
+    X, y = processor.load_go_data(num_samples=10)
     input_shape = (encoder.num_planes, go_board_rows, go_board_cols)
     model = Sequential()
     network_layers = large.layers(input_shape)
@@ -32,12 +32,12 @@ def main(graph):
 
     # 将训练的模型保存并序列化
     deep_learning_bot = DeepLearningAgent(model, encoder)
-    model_file = h5py.File("../agents/deep_bot.h5", "w")
+    model_file = h5py.File("./agents/deep_bot.h5", "w")
     deep_learning_bot.serialize(model_file)
 
     random_agent = RandomBot()
     # 加载序列化的模型
-    model_file = h5py.File("../agents/deep_bot.h5", "r")
+    model_file = h5py.File("./agents/deep_bot.h5", "r")
     # 防止加载异常
     try:
         bot_from_file = load_prediction_agent(model_file)
