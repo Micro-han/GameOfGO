@@ -112,9 +112,10 @@ class GoDataProcessor:
         # 将最后的特征存储到本地
         feature_file_base = self.data_dir + '/' + data_file_name + '_features_%d'
         label_file_base = self.data_dir + '/' + data_file_name + '_labels_%d'
-
         chunk = 0
-        chunksize = 1024
+        # 特征数量
+        chunksize = 128
+        print(features.shape[0])
         while features.shape[0] >= chunksize:
             feature_file = feature_file_base % chunk
             label_file = label_file_base % chunk
@@ -137,9 +138,9 @@ class GoDataProcessor:
         for file_name in file_names:
             file_prefix = file_name.replace('.tar.gz', '')
             base = self.data_dir + '/' + file_prefix + '_features_*.npy'
-            print(base)
             for feature_file in glob.glob(base):
                 label_file = feature_file.replace('features', 'labels')
+                print(label_file)
                 x = np.load(feature_file)
                 y = np.load(label_file)
                 x = x.astype('float32')
