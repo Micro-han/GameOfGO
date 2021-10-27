@@ -114,7 +114,7 @@ class GoDataProcessor:
         label_file_base = self.data_dir + '/' + data_file_name + '_labels_%d'
         chunk = 0
         # 特征数量
-        chunksize = 128
+        chunksize = 1024
         print(features.shape[0])
         while features.shape[0] >= chunksize:
             feature_file = feature_file_base % chunk

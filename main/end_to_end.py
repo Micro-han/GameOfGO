@@ -20,7 +20,7 @@ def main(graph):
     processor = GoDataProcessor(encoder=encoder.name())
 
     # 加载num_samples个棋谱的特征和标签
-    X, y = processor.load_go_data(num_samples=10)
+    X, y = processor.load_go_data(num_samples=1000)
     input_shape = (encoder.num_planes, go_board_rows, go_board_cols)
     model = Sequential()
     network_layers = large.layers(input_shape)
