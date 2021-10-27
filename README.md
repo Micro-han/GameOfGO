@@ -21,12 +21,6 @@ human_v_betago.py部署了一个成熟的围棋AI betago，在本地127.0.0.1:50
 
 human_v_human.py是基于tkinter的客户端人人对战
 
-**通过Start.py启动**
-
-安装好所需要的配置之后，直接运行根目录下的start.py即可启动游戏，start.py实现的很敷衍
-
-其内置了人机对战和人人对战，其中人机对战是AI betago，而人人对战即基于tkinter的客户端人人对战
-
 ### 训练
 
 **网络调整**
